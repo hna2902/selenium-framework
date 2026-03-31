@@ -27,6 +27,14 @@ jobs:
 
       - name: Chay mvn test (${{ matrix.browser }})
         run: mvn clean test -Dbrowser=${{ matrix.browser }} -Denv=dev -DsuiteXmlFile=testng-smoke.xml
+        env:
+          APP_USERNAME: ${{ secrets.SAUCEDEMO_USERNAME }}
+          APP_PASSWORD: ${{ secrets.SAUCEDEMO_PASSWORD }}
+
+      - name: Kiem tra bao mat
+        run: echo "Mat khau la $APP_PASSWORD"
+        env:
+          APP_PASSWORD: ${{ secrets.SAUCEDEMO_PASSWORD }}
 
       - name: Upload artifact
         if: failure()

@@ -16,7 +16,7 @@ public class ConfigReader {
         try (FileInputStream fis = new FileInputStream(fullPath)) {
             props.load(fis);
         } catch (IOException e) {
-            throw new RuntimeException("Lỗi Config: " + fullPath);
+            throw new RuntimeException("Loi Config: " + fullPath);
         }
     }
 
@@ -27,4 +27,20 @@ public class ConfigReader {
 
     public String getBaseUrl() { return props.getProperty("base.url"); }
     public int getRetryCount() { return Integer.parseInt(props.getProperty("retry.count", "1")); }
+
+    public String getUsername() {
+        String username = System.getenv("APP_USERNAME");
+        if (username == null || username.isBlank()) {
+            username = props.getProperty("app.username");
+        }
+        return username;
+    }
+
+    public String getPassword() {
+        String password = System.getenv("APP_PASSWORD");
+        if (password == null || password.isBlank()) {
+            password = props.getProperty("app.password");
+        }
+        return password;
+    }
 }
